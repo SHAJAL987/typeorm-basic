@@ -1,0 +1,5 @@
+npm init -y
+npm install express @types/express pg ts-node typeorm typescript
+npm install nodemon -g
+
+"dev":"nodemon --watch './**/*.ts' --exec 'ts-node' src/index.ts"
