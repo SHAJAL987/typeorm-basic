@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { Client } from "./entities/Client";
 import { Banker } from "./entities/Banker";
+import { Transaction } from "./entities/Transaction";
 
 const AppDataSource = new DataSource({
     type:"postgres",
@@ -9,7 +10,7 @@ const AppDataSource = new DataSource({
     username:"postgres",
     password:"123456",
     database:"typeorm",
-    entities:[Client,Banker],
+    entities:[Client,Banker,Transaction],
     synchronize: true
 });
 AppDataSource.initialize().then(()=>{
