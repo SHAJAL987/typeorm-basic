@@ -6,6 +6,8 @@ import { createClientRouter } from "./routes/create_client";
 import express from "express";
 import { createBankerRouter } from "./routes/create_banker";
 import { createTransectionRoute } from "./routes/create_transaction";
+import { User } from "./entities/User";
+import { Photo } from "./entities/Photo";
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -14,7 +16,7 @@ const AppDataSource = new DataSource({
   username: "postgres",
   password: "123456",
   database: "typeorm",
-  entities: [Client, Banker, Transaction],
+  entities: [Client, Banker, Transaction, User, Photo],
   synchronize: true,
 });
 AppDataSource.initialize()

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Client } from "./Client";
 
 export enum TransactionType{
@@ -7,7 +7,8 @@ export enum TransactionType{
 }
 
 @Entity()
-export class Transaction{
+export class Transaction extends BaseEntity{
+    
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -29,5 +30,5 @@ export class Transaction{
     @JoinColumn({
         name: "client_id"
     })
-    client:Client
+    client:Client[]
 }
