@@ -1,25 +1,14 @@
-import { DataSource } from "typeorm";
-import { Client } from "./entities/Client";
-import { Banker } from "./entities/Banker";
-import { Transaction } from "./entities/Transaction";
 import { createClientRouter } from "./routes/create_client";
 import express from "express";
 import { createBankerRouter } from "./routes/create_banker";
 import { createTransectionRoute } from "./routes/create_transaction";
-import { User } from "./entities/User";
-import { Photo } from "./entities/Photo";
+import { createUserRouter } from "./routes/create_user";
+import {createPhotoRouter} from "./routes/create_photo"
+import {connectionPool} from "../ormconfig"
 
-const AppDataSource = new DataSource({
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: "postgres",
-  password: "123456",
-  database: "typeorm",
-  entities: [Client, Banker, Transaction, User, Photo],
-  synchronize: true,
-});
-AppDataSource.initialize()
+
+
+connectionPool.initialize()
   .then(() => {
     const app = express();
     app.use(express.json());
@@ -28,6 +17,8 @@ AppDataSource.initialize()
     app.use(createClientRouter);
     app.use(createBankerRouter);
     app.use(createTransectionRoute);
+    app.use(createUserRouter);
+    app.use(createPhotoRouter);
 
     app.listen(8585, ()=>{
         console.log("listening to port 8585");
@@ -39,3 +30,4 @@ AppDataSource.initialize()
     console.log(error.toString());
     throw new Error("Unable to Connect DB");
   });
+

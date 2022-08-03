@@ -1,16 +1,16 @@
 import express from "express";
 import { Client } from "../entities/Client";
 import { Transaction } from "../entities/Transaction";
+import { connectionPool } from "../../ormconfig";
 
 const router = express();
 
-router.post("/api/client/:clientId/transection", async (req, res) => {
-  const { clientId } = req.params;
-  const { type, amount } = req.body;
+router.post("/api/client/transection", async (req, res) => {
+  const { type, amount, clientid } = req.body;
 
   const client = await Client.findOne({
     where: {
-      id: parseInt(clientId),
+      id: clientid,
     },
   });
 
@@ -21,12 +21,13 @@ router.post("/api/client/:clientId/transection", async (req, res) => {
     });
   }
 
-  const transaction = Transaction.create({
-    type:type,
-    amount:amount
-  });
+  
 
-  await transaction.save();
+  const transaction = new Transaction();
+  transaction.type = type;
+  transaction.amount = amount;
+
+  //await transaction.save();
 
   res.json({
     message: "Operation Successfull",
